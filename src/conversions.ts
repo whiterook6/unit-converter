@@ -298,17 +298,19 @@ export const conversions: Conversion[] = [
     {
         units: ["kelvin", "kelvins", "K"],
         ratio: 1,
-        dimension: "temperature"
+        dimension: "temperature",
+        offset: 273.15,
     },
     {
-        units: ["celsius", "celsius", "°C"],
+        units: ["°C", "degrees celsius", "degree celcius", "celcius" ],
         ratio: 1,
         dimension: "temperature"
     },
     {
-        units: ["fahrenheit", "fahrenheit", "°F"],
-        ratio: 1,
-        dimension: "temperature"
+        units: ["°F", "degrees fahrenheit", "degree fahrenheit", "fahrenheit"],
+        ratio: 1.8,
+        dimension: "temperature",
+        offset: 32,
     },
     {
         units: ["mile per hour", "miles per hour", "mph"],
@@ -368,7 +370,8 @@ export const conversions: Conversion[] = [
 ];
 
 export const convert = (input: string): ConversionResult => {
-    const pattern = /^(\d+) ([\w\s]+) in ([\w\s]+)$/;
+    
+    const pattern = /^(\d+\.?\d*) ([\w\s]+) in ([\w\s]+)$/;
     const match = input.match(pattern);
     if (!match) {
         throw new Error("Invalid input");
@@ -380,17 +383,31 @@ export const convert = (input: string): ConversionResult => {
     
     // guess the dimension
     const fromConversionOptions = conversions.filter(c => c.units.includes(from));
+    if (fromConversionOptions.length === 0) {
+        throw new Error(`Cannot match a from-unit for ${from}`);
+    }
+
     const toConversionOptions = conversions.filter(c => c.units.includes(to));
+    if (toConversionOptions.length === 0) {
+        throw new Error(`Cannot match a to-unit for ${to}`);
+    }
+    
     const dimension = DIMENSIONS.find(d => {
         return fromConversionOptions.some(c => c.dimension === d) && toConversionOptions.some(c => c.dimension === d);
     })
+    if (!dimension) {
+        throw new Error("Cannot match a dimension between the two units");
+    }
 
     // pick the correct units for this dimension
     const fromConversion = fromConversionOptions.find(c => c.dimension === dimension);
     const toConversion = toConversionOptions.find(c => c.dimension === dimension);
 
     // convert the value
-    const converted = (value / fromConversion.ratio) * toConversion.ratio;
+    const fromOffset = fromConversion.offset || 0;
+    const toOffset = toConversion.offset || 0;
+    const converted = (((value - fromOffset) * toConversion.ratio) / fromConversion.ratio) + toOffset;
+
     return {
         dimension: dimension!,
         from: fromConversion.units[0],

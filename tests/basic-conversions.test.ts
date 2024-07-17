@@ -37,4 +37,31 @@ describe("Basic Conversions", () => {
     expect(results.dimension).toBe("angle");
     expect(results.input).toBe(4);
   });
+
+  test("100 celcius in fahrenheit", () => {
+    const results = convert("100 celcius in fahrenheit");
+    expect(results.from).toBe("°C");
+    expect(results.to).toBe("°F");
+    expect(results.converted).toBeCloseTo(212);
+    expect(results.dimension).toBe("temperature");
+    expect(results.input).toBe(100);
+  });
+
+  test("98.7 fahrenheit in celcius", () => {
+    const results = convert("98.7 fahrenheit in celcius");
+    expect(results.converted).toBeCloseTo(37.0556);
+  });
+
+  const cases: Array<[string, number]> = [
+    ["1 mile in meters", 1609.34],
+    ["1 mile in kilometers", 1.60934],
+    ["1 mile in feet", 5280],
+    ["1 mile in inches", 63360.053]
+  ];
+  cases.forEach(([input, expected]) => {
+    test(input, () => {
+      const results = convert(input);
+      expect(results.converted).toBeCloseTo(expected);
+    });
+  });
 });
