@@ -1,14 +1,20 @@
 {
   "scripts": {
-    "dev:build": "node build/dev-build.mjs"
+    "dev:build": "node build/dev-build.mjs",
+    "start": "node output/index.js",
+    "test": "jest"
   },
   "name": "unit-conversion",
   "author": "whiterook6@gmail.com",
   "license": "UNLICENSED",
   "private": true,
   "devDependencies": {
+    "@types/jest": "^29.5.12",
     "@types/node": "^20.14.11",
     "esbuild": "0.20",
+    "jest": "^29.7.0",
+    "ts-jest": "^29.2.2",
+    "ts-node": "^10.9.2",
     "tsc": "^2.0.4",
     "typescript": "^5.5.3"
   }
