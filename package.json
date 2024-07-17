@@ -1,0 +1,15 @@
+{
+  "scripts": {
+    "dev:build": "node build/dev-build.mjs"
+  },
+  "name": "unit-conversion",
+  "author": "whiterook6@gmail.com",
+  "license": "UNLICENSED",
+  "private": true,
+  "devDependencies": {
+    "@types/node": "^20.14.11",
+    "esbuild": "0.20",
+    "tsc": "^2.0.4",
+    "typescript": "^5.5.3"
+  }
+}
