@@ -20,6 +20,15 @@ describe("Basic Conversions", () => {
     expect(results.input).toBe(1);
   });
 
+  test("4 miles per hour in kilometers per hour", () => {
+    const results = convert("4 miles per hour in kilometers per hour");
+    expect(results.from).toBe("mile per hour");
+    expect(results.to).toBe("kilometer per hour");
+    expect(results.converted).toBeCloseTo(6.43738);
+    expect(results.dimension).toBe("speed");
+    expect(results.input).toBe(4);
+  });
+
   test("1 pound in grams", () => {
     const results = convert("1 pound in grams");
     expect(results.from).toBe("pound");

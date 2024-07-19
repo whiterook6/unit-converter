@@ -6,6 +6,8 @@ export const DIMENSIONS = [
     "mass",
     "data",
     "force",
+    "word",
+    "power",
     "energy",
     "temperature",
     "speed",
@@ -315,6 +317,11 @@ export const conversions: Conversion[] = [
     {
         units: ["mile per hour", "miles per hour", "mph"],
         ratio: 1,
+        dimension: "speed"
+    },
+    {
+        units: ["meter per second", "meters per second", "m/s"],
+        ratio: 0.44704,
         dimension: "speed"
     },
     {

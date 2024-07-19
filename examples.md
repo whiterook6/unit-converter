@@ -10,3 +10,13 @@ Detect units
 Detect math
 Convert from one unit to another
 Fetch conversion rates across various dimensions
+
+# DEV
+
+## Run Tests
+
+`yarn run test`
+
+## Debug Tests
+
+In a javascript debug terminal in VSCode, run `yarn run test tests/<your test>.test.ts`
